@@ -1,18 +1,6 @@
 import numpy as np
 import random
-"""
-class land:
-    def __init__(self, point):
-        self.tl= None
-        self.t= None
-        self.tr= None
-        self.l= None
-        self.r= None 
-        self.bl= None
-        self.b= None
-        self.br= None
-        slef.point = point
-"""
+
 bomb_pos= []
 adj= [(-1,-1),(-1,0),(-1,+1),(0,-1),(0,+1),(1,-1),(1,0),(1,1)]
 W_L= 1
@@ -35,39 +23,63 @@ def createBoard(num_row , num_col):
     return board
 
 def logic(W_L):
-    num_row= 10
-    num_col= 10
+    num_row =10
+    num_col =10
+    board = createBoard(num_row , num_col)
 
     click = None
 
-    board = createBoard(num_row , num_col)
+    
     #not_checked_area = np.array([False]*num_row*num_col)
     backend_board = board.flatten()
     given_board = np.array([' ']*num_row*num_col).reshape(num_row,num_col)
+    choice_list = []
+    for p in range(0,num_row):
+        for q in range(0, num_col):
+            choice_list.append(str(p)+str(q))
 
-    while len(backend_board) != 0:
-        print(len(backend_board))
-        i=random.randrange(0,num_row-1,2)
-        j=random.randrange(0,num_col-1,2)
+
+    while len(choice_list) != 0:
+        print(len(choice_list))
+        choice= random.choice(choice_list)
+        
+        i=int(choice[0])
+        j=int(choice[1])
         click = board[i][j]
-       
+        print(f"{click}  of {(i,j)}")
+        
         """ When pressed a bomb """
 
         if click == -1:
-           print(f"here  {len(backend_board)}")
            gameOver()
            W_L = 0
            return W_L
-
         else:
             given_board[i][j] = click
+
+
+
+
+
+
+          
+
+
+
+
+
+
+
+
             #generated_values = pressLand(click)
 
-            np.delete(backend_board ,[i,j] )
-    masterKey= None
-    print(given_board)
-    while(masterKey != 'A'):
-        masterKey= input()    
+            index = np.argwhere(choice_list == str(i)+str(j))
+            choice_list=np.delete(choice_list , index)
+            print(choice_list)
+            masterKey= None
+            print(given_board)
+            while(masterKey != 'A'):
+                masterKey= input()    
 
 def pressLand(click):
     pass
@@ -76,8 +88,8 @@ def pressLand(click):
 def gameOver():
     print("program  ended")
 
-def youWin():
-    print("Program ended")
+#def youWin():
+#    print("Program ended")
 
 W_L= logic(W_L)
 if(W_L == 0):
