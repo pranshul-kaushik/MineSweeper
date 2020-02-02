@@ -8,8 +8,8 @@ adj= [(-1,-1),(-1,0),(-1,+1),(0,-1),(0,+1),(1,-1),(1,0),(1,1)]
 num_row = 17
 num_col = 17
 not_checked_area = np.array([False]*num_row*num_col).reshape(num_row,num_col)
-
 board =createBoard(num_row, num_col)
+choice_list =[]
 
 def refresh(choice_list):
     to_check_choice_list =[(j,i) for j in range(not_checked_area.shape[1]) for i in range(not_checked_area.shape[0])]
@@ -17,25 +17,30 @@ def refresh(choice_list):
         if not_checked_area[i[0]][i[1]] == False:
             choice_list.append([i[0], i[1]])
     return choice_list
-        
 
 
-def logic(W_L,num_row,num_col):
+def brain(choice_list):
+    choice= random.choice(choice_list)
+    i=int(choice[0])
+    j=int(choice[1])
+    left_click = board[i][j]
+    choice_list =refresh([])
+    return choice ,i, j,left_click ,choice_list
 
-    board = createBoard(num_row , num_col)
+
+
+def userView(W_L,num_row,num_col):
+    global choice_list
     left_click = None
     given_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
     choice_list =[[p,q] for p in range(0,num_row) for q in range(0, num_col)]
+
     while len(choice_list) != 0:
         f=0
 
+        choice ,i ,j ,left_click , choice_list=brain(choice_list)
 
-        choice= random.choice(choice_list)
-        
-        i=int(choice[0])
-        j=int(choice[1])
-        left_click = board[i][j]
-        
+
         print(f"{left_click}  of {(i,j)}")
 
         """ When pressed a bomb """
@@ -66,6 +71,7 @@ def logic(W_L,num_row,num_col):
         while(masterKey != 'A'):
             masterKey= input()    
         
+
 
 def pressLand(board,i,j,num_row,num_col ,generated_values):
     
@@ -116,6 +122,7 @@ def pressLand(board,i,j,num_row,num_col ,generated_values):
         not_checked_area[i+1][j+1] = True
     generated_values.append([i,j])
     not_checked_area[i][j] = True
+    
     pressLand(board , i+1,j,num_row,num_col,generated_values)    
     pressLand(board , i-1,j,num_row,num_col,generated_values)
     pressLand(board , i,j+1,num_row,num_col,generated_values)
@@ -133,7 +140,7 @@ def gameOver(given_board):
     print("program  ended")
 
    
-W_L= logic(W_L,num_row,num_col)
+W_L= userView(W_L,num_row,num_col)
 if(W_L == 0):
    print("LOST")      
 else:
