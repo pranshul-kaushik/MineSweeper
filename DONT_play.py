@@ -1,14 +1,13 @@
 import numpy as np
 import random
-from board import createBoard
-
+from DONT_use_ import createBoard
 
 W_L= 1
 adj= [(-1,-1),(-1,0),(-1,+1),(0,-1),(0,+1),(1,-1),(1,0),(1,1)]
 num_row = 17
 num_col = 17
 not_checked_area = np.array([False]*num_row*num_col).reshape(num_row,num_col)
-board =createBoard(num_row, num_col)
+board =createBoard(num_row, num_col) 
 choice_list =[]
 
 def refresh(choice_list):

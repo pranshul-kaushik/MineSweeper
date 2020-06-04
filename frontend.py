@@ -9,7 +9,7 @@ gameDisplay.fill(white)
 gameExit =False
 
 scale_x =100
-scale_y =50
+scale_y =100
 
 next_line_x =0
 next_line_y =0
@@ -20,9 +20,9 @@ while not gameExit:
             if event.key == pg.K_ESCAPE:
                 gameExit= True
     
-    pg.draw.line(gameDisplay ,black ,(next_line_x,0),(next_line_x,700),4)
-    pg.draw.line(gameDisplay ,black ,(0,next_line_y),(1350,next_line_y),4)
-    print((scale_x ,scale_y))
+    pg.draw.line(gameDisplay ,black ,(next_line_x,0),(next_line_x,700),1)
+    pg.draw.line(gameDisplay ,black ,(0,next_line_y),(1350,next_line_y),1)
+    print((next_line_x ,next_line_y))
     
     next_line_x=(next_line_x+ scale_x)%1350
     next_line_y=(next_line_y+ scale_y)%700
