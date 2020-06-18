@@ -21,11 +21,15 @@ def createBoard(num_row ,num_col):
     for i in range(num_row):
         for j in range(num_col):
             cell_list.append(cell(number = 0 ,adj =None , is_bomb =None))
+ 
     '''Reshape it into num_row and num_col'''
     board =np.array(cell_list).reshape(num_row, num_col)
     
     '''Check bomb is for the number of bomb placed'''
     check_bombs=0
+
+    def Cell(choice):
+        return board[choice[0]][choice[1]]
 
     '''This is for filling the attributes of each Cell *object* '''
     for i in range(num_row):
@@ -33,14 +37,14 @@ def createBoard(num_row ,num_col):
             board[i][j].pos= (i,j)
             board[i][j].is_bomb = False
             board[i][j].adj ={
-                "top_left": board[i-1 ,j-1] if i>0 and j>0 else None,
-                "top" : board[i-1 ,j] if i>0 else None,
-                "top_right": board[i-1 ,j+1] if i>0 and j<num_col-1 else None,
-                "left":board[i ,j-1] if j>0 else None,
-                "right":board[i ,j+1] if j<num_col-1 else None,
-                "bottom_left":board[i+1 ,j-1] if i<num_row-1 and j>0 else None,
-                "bottom":board[i+1 ,j] if i<num_row-1 else None,
-                "bottom_right":board[i+1 ,j+1] if i<num_row-1 and j<num_col-1 else None
+                "top_left": [i-1 ,j-1] if i>0 and j>0 else None,
+                "top" : [i-1,j] if i>0 else None,
+                "top_right": [i-1,j+1] if i>0 and j<num_col-1 else None,
+                "left": [i,j-1] if j>0 else None,
+                "right": [i,j+1] if j<num_col-1 else None,
+                "bottom_left": [i+1,j-1] if i<num_row-1 and j>0 else None,
+                "bottom": [i+1,j] if i<num_row-1 else None,
+                "bottom_right": [i+1,j+1] if i<num_row-1 and j<num_col-1 else None
             }
 
     '''Now to fill randomly bombs equal to number_bomb'''        
@@ -59,19 +63,15 @@ def createBoard(num_row ,num_col):
             board[x][y].is_bomb = True
             check_bombs+=1
             
-            '''Adj *Dict* items() will give the key as well as the value'''
-            '''i is the key (eg 'top','top_left',..)
-            and j is the value (i.e the Cell *object*) '''
             for i,j in board[x][y].adj.items():
                 
-                '''It will only be accepted if j (i.e. Cell *Object*) is not None
-                or not out of bound'''
                 acceptable = True if j != None else False
+                if acceptable:
+                    j = Cell(j)
                 
                 '''If acceptable and there is no bomb in its adjecent'''
-                if acceptable and board[x][y].adj[i].is_bomb == False:
+                if acceptable and Cell(board[x][y].adj[i]).is_bomb == False:
 
                     '''Increment the Cell's number by 1'''
-                    board[x][y].adj[i].number+=1   
+                    Cell(board[x][y].adj[i]).number+=1   
     return board
-
