@@ -61,7 +61,8 @@ BUTTON {
         }).then(function(response) {
           document.getElementById("status").innerHTML = '';
           return response.json();
-      })      
+      }); 
+            
       var num_row = document.getElementById("num_row").value;
       var num_col = document.getElementById("num_col").value;
       fetch('http://127.0.0.1:8000/ingame/create_board/', {

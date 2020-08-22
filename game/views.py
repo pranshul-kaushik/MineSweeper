@@ -11,7 +11,6 @@ import json
 def new_game(request):
     game= board_info.objects.all()
     for i in game:
-        #print(i)
         i.delete()
     return JsonResponse({})
 
@@ -23,7 +22,6 @@ def play_board(request):
     num_col = int(input_info.get('num_col'))
     pos = (num_row,num_col)
     action = int(input_info.get('action'))
-    #print(action)
     board, status = update_board(pos, action)
     return JsonResponse({"board": board.tolist(), "status": status})
 

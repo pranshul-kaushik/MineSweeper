@@ -6,14 +6,11 @@ from game.models import board_info
 def new_board(num_row, num_col):
     board = board_info.objects.filter()
     if board.count():
-        ##print(board[0].to_give_board)
         return board[0].to_give_board
 
     else:
         board =createBoard(num_row,num_col)
-        ##print(board)
         _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
-        ##print(_to_give_board)
         _board_info = board_info(
             true_board = board,
             to_give_board = _to_give_board,
@@ -22,7 +19,6 @@ def new_board(num_row, num_col):
         )    
 
         _board_info.save()
-        ##print(_board_info.to_give_board)
         return _board_info.to_give_board
         
 def update_board(choice ,action):
@@ -34,15 +30,14 @@ def update_board(choice ,action):
     num_row = board.shape[0]
     num_col = board.shape[1]
 
-    def Given_board(choice = None):
-        if choice != None and Cell(choice).is_flaged == False:
+    def Given_board(choice):
+        if Cell(choice).is_flaged == False:
             given_board[choice[0]][choice[1]] = Number(choice)
-        if choice != None and Cell(choice).is_flaged == True:
+        if Cell(choice).is_flaged == True:
             given_board[choice[0]][choice[1]] = '#'
 
 
     def Number (choice):
-        ##print(board[choice[0]][choice[1]],'<<<<<<<')
         return board[choice[0]][choice[1]].number
 
     def Is_checked (choice, put =None):
@@ -70,24 +65,19 @@ def update_board(choice ,action):
             if this_adj != None and cell.number == 0 and this_adj.is_checked == False:
                 this_adj.is_checked = True
                 open_cell.append(cell.pos)
-                print("pL", open_cell)
                 Given_board(this_adj.pos)
                 Press_land(this_adj, open_cell)
         cell.is_checked = True
-        print("last hope", open_cell)
+        Given_board(cell.pos)
         return open_cell
     def Hide(choice):
         given_board[choice[0], choice[1]] = '.'
 
-    #print("before", action)
     if action == 1 and Cell(choice).is_flaged:
         action = -1
-    #print("after", action)
-    #print(type(action))
-    print(cell_left)
+
     if cell_left != 0:
         if action == -1:
-            #print("ME NO FLAG")
             Cell(choice).is_flaged = False
             Is_checked(choice ,False)
             Hide(choice)
@@ -95,38 +85,31 @@ def update_board(choice ,action):
 
         
         elif action == 1:
-            #print("ME FLAG")
             Cell(choice).is_flaged = True
             Is_checked(choice ,True)
             Given_board(choice)
             cell_left-=1
         else:
-            ##print('..........')
-            if Number(choice) == -1:
-                ##print('..........')
-                _to_give_board = np.array([
-                    str(Number((i,j))) for i in range(num_row) for j in range(num_col)
-                ]).reshape(num_row, num_col)
-
-                _board_info.true_board = board
-                _board_info.to_give_board = _to_give_board
-                _board_info.cell_left = num_row*num_col
-                _board_info.number_bombs = int(0.15*(num_row*num_col))
-                _board_info.save()                
-                return _to_give_board , -1
-
-            else:
-                if Number(choice) != 0:
-                    #print('________')
-                    Is_checked(choice , True)
-                    Given_board(choice)
-                    cell_left-=1
-                
+            if Cell(choice).is_flaged != True:
+                if Number(choice) == -1:
+                    _to_give_board = np.array([
+                        str(Number((i,j))) for i in range(num_row) for j in range(num_col)
+                    ]).reshape(num_row, num_col)
+                    _board_info.true_board = board
+                    _board_info.to_give_board = _to_give_board
+                    _board_info.cell_left = num_row*num_col
+                    _board_info.number_bombs = int(0.15*(num_row*num_col))
+                    _board_info.save()                
+                    return _to_give_board , -1
                 else:
-                    open_cell = []
-                    cell_left -= len(Press_land(Cell(choice), open_cell))
-                    print("--->", cell_left)
-        #print(given_board)
+                    if Number(choice) != 0:
+                        Is_checked(choice , True)
+                        Given_board(choice)
+                        cell_left-=1
+                    else:
+                        open_cell = []
+                        cell_left -= len(Press_land(Cell(choice), open_cell))
+        print(given_board, choice)
 
         _board_info.true_board = board
         _board_info.to_give_board = given_board
@@ -140,8 +123,4 @@ def update_board(choice ,action):
             return given_board, 0
     
     else:
-        print("I am here")
         return given_board, 1
-
-
-        
