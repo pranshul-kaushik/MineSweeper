@@ -3,7 +3,7 @@ import random
 from bring_board import createBoard
 from opening_cells import update_board
 import time
-num_row, num_col = 29,17
+num_row, num_col = 20,17
 board = createBoard(num_row, num_col)
 given_board = np.array(["*" for i in range(num_row) for j in range(num_col)
                     ]).reshape(num_row, num_col)
@@ -73,7 +73,7 @@ status = 0
 while not status:
     #start = time.time()
     choice_list = [[i,j] for i in range(num_row) for j in range(num_col) if not board[i][j].is_checked]
-
+    cell_left = len(choice_list)
     action = 0
     master = ""
     for i in range(num_row):
@@ -121,12 +121,15 @@ while not status:
             x,y = min_prob_of_bomb[1]
             action = 0
     else:
-        while True:
-            print("a")
-            x,y = random.choice(choice_list)
-            if prob_board[x][y] == 0:
-                break  
-        x,y = random.choice(choice_list)
+        # while True:
+        #     print("a")
+        #     x,y = random.choice(choice_list)
+        #     if prob_board[x][y] == 0:
+        #         break  
+        left_cell_prob = [[prob_board[x][y],[x,y]] for x,y in choice_list]
+        pick_in_this = [prob_cell[1] for prob_cell in left_cell_prob if prob_cell[0] == min(left_cell_prob)[0]]
+        x,y = random.choice(pick_in_this)
+        print(f"({x},{y}) prob {prob_board[x][y]}")
     try:
         if len(choice_list):
             choice_list.remove([x,y])
@@ -138,6 +141,7 @@ while not status:
     prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
                     ]).reshape(num_row, num_col)
     print(given_board,"\n\n")
+    print(status)
     #while master != "A":
     #    master = input()
     #end = time.time()

@@ -1,28 +1,40 @@
 import numpy as np
 import random
 from .bring_board import createBoard
-from game.models import board_info
+from game.models import board_info, user_info
 
-def new_board(num_row, num_col):
-    board = board_info.objects.filter()
-    if board.count():
-        return board[0].to_give_board
+def new_board(num_row, num_col, user_id):
+    try:
+        user = user_info.objects.get(user_id = user_id)
+    except:
+        user = user_info(
+            user_id= user_id
+        )
+        user.save()
 
-    else:
-        board =createBoard(num_row,num_col)
-        _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
-        _board_info = board_info(
-            true_board = board,
-            to_give_board = _to_give_board,
-            cell_left = num_row*num_col,
-            number_bombs = int(0.15*(num_row*num_col))
-        )    
+    # board = board_info.objects.filter()
+    # if board.count():
+    #     return board[0].to_give_board
 
-        _board_info.save()
-        return _board_info.to_give_board
+    # else:
+    board =createBoard(num_row,num_col)
+    _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
+    _board_info = board_info(
+        true_board = board,
+        user_id= user,
+        to_give_board = _to_give_board,
+        cell_left = num_row*num_col,
+        number_bombs = int(0.15*(num_row*num_col))
+    )    
+
+    _board_info.save()
+    return _board_info.to_give_board
         
-def update_board(choice ,action):
-    _board_info = board_info.objects.filter()[0]
+def update_board(choice ,action, user_id, time):
+    _board_info = board_info.objects.filter(user_id__user_id = user_id)[0]
+    _board_info.timer = time
+    _board_info.save()
+    
     board = _board_info.true_board
     given_board = _board_info.to_give_board
     number_bomb = _board_info.number_bombs
