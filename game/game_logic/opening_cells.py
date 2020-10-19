@@ -31,7 +31,7 @@ def new_board(num_row, num_col, user_id):
     return _board_info.to_give_board
         
 def update_board(choice ,action, user_id, time):
-    _board_info = board_info.objects.filter(user_id__user_id = user_id)[0]
+    _board_info = board_info.objects.filter(user_id__user_id = user_id).latest('id')
     _board_info.timer = time
     _board_info.save()
     
@@ -41,6 +41,8 @@ def update_board(choice ,action, user_id, time):
     cell_left  = _board_info.cell_left
     num_row = board.shape[0]
     num_col = board.shape[1]
+
+    #print(given_board,'-'*20,'\n\n')
 
     def Given_board(choice):
         if Cell(choice).is_flaged == False:
@@ -111,8 +113,8 @@ def update_board(choice ,action, user_id, time):
                     _board_info.to_give_board = _to_give_board
                     _board_info.cell_left = num_row*num_col
                     _board_info.number_bombs = int(0.15*(num_row*num_col))
-                    _board_info.save()                
-                    return _to_give_board , -1
+                    _board_info.save()              
+                    return board,_to_give_board , -1
                 else:
                     if Number(choice) != 0:
                         Is_checked(choice , True)
@@ -130,9 +132,9 @@ def update_board(choice ,action, user_id, time):
         _board_info.save() 
 
         if cell_left == 0:
-            return given_board, 1
+            return board, given_board, 1
         else:
-            return given_board, 0
+            return board, given_board, 0
     
     else:
-        return given_board, 1
+        return board, given_board, 1

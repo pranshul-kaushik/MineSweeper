@@ -3,6 +3,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .game_logic.opening_cells import new_board, update_board
 from .models import board_info
+import sys
+sys.path.append(".")
+from bot.AI import AI
+
 
 import json
 # Create your views here.
@@ -14,6 +18,14 @@ import json
 #         i.delete()
 #     return JsonResponse({})
 
+@csrf_exempt
+def bot(request):
+    input_info = json.loads(request.body)
+    user_id = input_info.get('user_id')
+    time = float(input_info.get('timer'))
+    num_row, num_col, action, status, board =  AI(user_id, time)
+    return JsonResponse({"board": board.tolist(), "status": status, "user_id": user_id,
+                         "num_row": num_row, "num_col": num_col, "action": action})
 
 @csrf_exempt
 def play_board(request):

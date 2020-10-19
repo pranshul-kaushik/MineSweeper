@@ -93,7 +93,6 @@ def update_board(choice ,action, num_row,num_col, board ,given_board, number_bom
                         cell_left -= len(Press_land(Cell(choice), open_cell))
 
         if cell_left == 0:
-            print("WON")
             return board,given_board, 1
         else:
             return board,given_board, 0
