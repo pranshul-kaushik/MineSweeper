@@ -12,7 +12,7 @@ def AI(user_id , timer):
     
     num_row ,num_col = 10,10
 
-    def createBoard_bot(user_id):
+    def createBoard_bot(_user_info):
         board =createBoard(num_row,num_col)
         _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
         _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
@@ -21,6 +21,7 @@ def AI(user_id , timer):
         _board_info = board_info(
             true_board = board,
             user_id= _user_info,
+            is_bot = True,
             to_give_board = _to_give_board,
             prob_board = _prob_board,
             cell_left = num_row*num_col,
@@ -38,17 +39,16 @@ def AI(user_id , timer):
         )
 
         _user_info.save()
-        _board_info = createBoard_bot(user_id)
+        _board_info = createBoard_bot(_user_info)
         return -1,-1, -9999, _board_info.status, _board_info.to_give_board
 
     else:
         _user_info = user_info.objects.filter(user_id= user_id)[0]
         _board_info = board_info.objects.filter(user_id= _user_info, status = 0)
 
-        #print('---\n\n',_board_info,'---\n\n')
 
         if len(_board_info) == 0:
-            _board_info = createBoard_bot(user_id= user_id)
+            _board_info = createBoard_bot(_user_info)
             return -1,-1, -9999, _board_info.status, _board_info.to_give_board
         else:
             _board_info = _board_info.latest('updated_on')
@@ -200,8 +200,6 @@ def AI(user_id , timer):
         _board_info.cell_left  = len(choice_list)
         _board_info.prob_board = prob_board
         _board_info.status = status
-        #print("-"*30, status)
-
         _board_info.save()
 
         return x, y, action, status, given_board 

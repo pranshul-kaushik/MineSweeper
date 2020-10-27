@@ -17,21 +17,28 @@ def new_board(num_row, num_col, user_id):
     #     return board[0].to_give_board
 
     # else:
-    board =createBoard(num_row,num_col)
-    _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
-    _board_info = board_info(
-        true_board = board,
-        user_id= user,
-        to_give_board = _to_give_board,
-        cell_left = num_row*num_col,
-        number_bombs = int(0.15*(num_row*num_col))
-    )    
+    _board_info = board_info.objects.filter(user_id= user, status= 0)
 
-    _board_info.save()
-    return _board_info.to_give_board
+    if len(_board_info) == 0:
+        board =createBoard(num_row,num_col)
+        _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
+        _board_info = board_info(
+            true_board = board,
+            is_bot= False,
+            user_id= user,
+            to_give_board = _to_give_board,
+            cell_left = num_row*num_col,
+            number_bombs = int(0.15*(num_row*num_col))
+        )    
+        _board_info.save()
+        return _board_info.to_give_board
+    else:
+        _board_info = board_info.objects.filter(user_id= user, status = 0)
+        _board_info = _board_info.latest('updated_on')
+
         
 def update_board(choice ,action, user_id, time):
-    _board_info = board_info.objects.filter(user_id__user_id = user_id).latest('id')
+    _board_info = board_info.objects.filter(user_id__user_id = user_id).latest('updated_on')
     _board_info.timer = time
     _board_info.save()
     

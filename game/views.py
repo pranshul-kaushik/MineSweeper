@@ -36,8 +36,8 @@ def play_board(request):
     pos = (num_row,num_col)
     action = int(input_info.get('action'))
     time = float(input_info.get('timer'))
-    board, status = update_board(pos, action, user_id, time)
-    return JsonResponse({"board": board.tolist(), "status": status, "user_id": user_id})
+    board,given_board, status = update_board(pos, action, user_id, time)
+    return JsonResponse({"board": given_board.tolist(), "status": status, "user_id": user_id})
 
 @csrf_exempt
 def create_board(request):
@@ -48,3 +48,7 @@ def create_board(request):
     board_info = new_board(num_row, num_col, user_id)
     _board_info = {'board':board_info.tolist()}
     return JsonResponse(_board_info,safe=False)
+
+@csrf_exempt
+def show_highscore(request):
+    return JsonResponse(list(board_info.objects.filter(status = 1, is_bot= False).order_by("timer").values("user_id", "timer")))
