@@ -4,21 +4,31 @@
 - Build a Bot that will able to solve the board by choosing best move in short amount of time.
 - Each board will be scored on the basis of a timer ( i.e. time in which one completes the board ) that will evaluate the performance of either a bot or a User
 
-**Bot**
+<h1>Bot</h1>
 
-1. Approaches
+<h2>Approaches</h2>
+
+- **Traditional approch** is how a normal user plays Minesweeper game
 
 ![](Photos/Approaches/Traditional.png)
+
+- **Probabilistic approach** is probabilistic way of solving the game
 
 ![](Photos/Approaches/Prob_approch.png)
 
 ![](Photos/Approaches/prob_flow.png)
 
+- **Statistical approach** using Logistic Regression to solve the problem 
+
 ![](Photos/Approaches/Logistic.png)
 
-2. Scoring
+<h2>Scoring</h2>
+
+- **Confusion matrix** will be used as a metric which will further be used to calculate Recall and Precision 
 
 ![](Photos/Scoring/Confusion_matrix.png)
+
+- **Time**
 
 ![](Photos/Scoring/Time.png)
 
