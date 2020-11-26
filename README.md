@@ -28,6 +28,10 @@
 
 ![](Photos/Scoring/Confusion_matrix.png)
 
+- **Area under the ROC curve** will inform us about how better the classifier is from Random classifier and also provide us with the best probability cut off
+
+![](Photos/Scoring/ROC.png)
+
 - **Time**
 
 ![](Photos/Scoring/Time.png)
