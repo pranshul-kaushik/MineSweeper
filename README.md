@@ -37,4 +37,4 @@
 ![](Photos/Scoring/Time.png)
 
 **Note**
-_For more information about the data base and backend visit [](https://docs.google.com/presentation/d/1THGFz1qKtY0oDYyNSphC07p3P5J9VYH4Wwz9Db9jbDI/edit?usp=sharing)_ 
+_For more information about the data base and backend visit [here](https://docs.google.com/presentation/d/1THGFz1qKtY0oDYyNSphC07p3P5J9VYH4Wwz9Db9jbDI/edit?usp=sharing)_ 
