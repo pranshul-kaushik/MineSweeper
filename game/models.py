@@ -13,7 +13,7 @@ class user_info(models.Model):
 
 class board_info(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=True)
-    user_id = models.ForeignKey(user_info, on_delete=None)
+    user_id = models.ForeignKey(user_info,null = True ,on_delete=models.SET_NULL)
     true_board = NDArrayField()
     prob_board = NDArrayField(null= True)
     is_bot = models.BooleanField(default= False)
