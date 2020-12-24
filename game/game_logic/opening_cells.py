@@ -31,7 +31,7 @@ def new_board(num_row, num_col, user_id):
         number_bombs = int(0.15*(num_row*num_col))
     )    
     _board_info.save()
-    return _board_info.to_give_board
+    return _board_info.to_give_board, _board_info.number_bombs 
     #else:
     #    _board_info = board_info.objects.filter(user_id= user, status = 0)
     #    _board_info = _board_info.latest('updated_on')
@@ -81,7 +81,6 @@ def update_board(choice ,action, user_id, time):
         if cell == None or cell.number != 0:
             return
         adj=list(cell.adj.values())
-        
         for this_adj in adj:
             if this_adj != None:
                 this_adj = Cell(this_adj)
@@ -124,7 +123,7 @@ def update_board(choice ,action, user_id, time):
                     _board_info.number_bombs = int(0.15*(num_row*num_col))
                     _board_info.status = -1
                     _board_info.save()              
-                    return board,_to_give_board , -1
+                    return board,_to_give_board , -1, action
                 else:
                     if Number(choice) != 0:
                         Is_checked(choice , True)
@@ -140,6 +139,7 @@ def update_board(choice ,action, user_id, time):
         _board_info.cell_left = cell_left
         _board_info.number_bombs = int(0.15*(num_row*num_col))
 
+        print(f"cell left", "-"*7,">", cell_left)
         if cell_left == 0:
             _board_info.status = 1
             
@@ -147,7 +147,7 @@ def update_board(choice ,action, user_id, time):
             _board_info.status = 0
         
         _board_info.save() 
-        return board, given_board, _board_info.status
+        return board, given_board, _board_info.status, action
 
     else:
-        return board, given_board, _board_info.status
+        return board, given_board, _board_info.status, action
