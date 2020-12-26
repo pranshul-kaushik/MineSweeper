@@ -86,12 +86,18 @@ def update_board(choice ,action, user_id, time):
                 this_adj = Cell(this_adj)
             if this_adj != None and cell.number == 0 and this_adj.is_checked == False:
                 this_adj.is_checked = True
-                open_cell.append(cell.pos)
+                open_cell.append(this_adj.pos)
                 Given_board(this_adj.pos)
                 Press_land(this_adj, open_cell)
-        cell.is_checked = True
-        Given_board(cell.pos)
+        
+        if not cell.is_checked:
+            cell.is_checked = True
+            open_cell.append(cell.pos)
+            Given_board(cell.pos)
+        
+        print(set(open_cell))
         return open_cell
+
     def Hide(choice):
         given_board[choice[0], choice[1]] = '.'
 
