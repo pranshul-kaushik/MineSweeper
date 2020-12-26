@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Minesweeper</title>
+</head>
+
+<body>
+    <section class="frame">
+        <!-- outside page -> inial animation page cover -->
+        <div class="header">
+            <h1 class="heading">MINESWEEPER</h1>
+            <p class="text">a Brain Teaser</p>
+            <hr class="line">
+        </div>
+
+
+        <!-- Inside page -->
+        <section class="background">
+
+            <!-- logo part      -->
+            <div class="logo">
+                <span class="logo__box neu">M</span>
+                <p class="logo__text">MINESWEEPER</p>
+            </div>
+
+
+            <!-- selecting area -->
+
+            <div class="select__box neu">
+                <button id="easy" class="category"> EASY</button>
+                <button id="medium" class="category">MEDIUM</button>
+                <button id="hard" class="category">HARD</button>
+
+
+            </div>
+
+
+            <!-- key box -->
+            <section class="key__block">
+                <!-- name and entry detail page -->
+                <section id="entry" class="neu none">
+                    <h1> Enter your name !</h1>
+                    <input class="input-name" type="text" placeholder="Your Name" required>
+                    <button class="play-btn"> PLAY</button>
+                </section>
+
+                <!--  Grid page Html -->
+                <section id="gridblock" class="neu none">
+                    <!-- data structure of matrix -->
+                    <table id="matrix" class="">
+                    </table>
+
+                    <!-- visual of table -->
+                    <table id="myTable" class="">
+                    </table>
+                </section>
+
+            </section>
+
+
+            <!-- clock section     -->
+
+            <section class="clock__box">
+                <div class="clock neu">
+                    <h1>clock</h1>
+                    <span class="time">00:00</span>
+                </div>
+            </section>
+
+            <!--flag page at right  -->
+            <section class="flag__block neu">
+                <!-- frag area work -->
+                <div class="frames">
+                    <div class="frames-bomb">
+                        <div class="img">
+                            <img src="bomb.png" alt="bomb">
+                        </div>
+                        <p>: 00</p>
+                    </div>
+
+                    <div class="frames-flag">
+                        <div class="img">
+                            <img src="flag.png" alt="bomb">
+                        </div>
+                        <p>: 00</p>
+                    </div>
+                </div>
+
+                <!-- top players area -->
+                <div class="top">
+                    <div class="top__heading"> Players</div>
+                </div>
+            </section>
+
+            <!-- name section -->
+            <div class="naming">
+                <!-- <img src="bomb.png" alt=""> -->
+            </div>
+
+        </section>
+
+    </section>
+
+
+</body>
+<script src="index.js"></script>
+
+</html>
+
+<!-- <table id="myTable">
+          
+</table>
+<button onclick="myCreateFunction()">start</button> -->
