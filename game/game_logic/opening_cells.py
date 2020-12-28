@@ -95,7 +95,6 @@ def update_board(choice ,action, user_id, time):
             open_cell.append(cell.pos)
             Given_board(cell.pos)
         
-        print(set(open_cell))
         return open_cell
 
     def Hide(choice):
