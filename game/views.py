@@ -43,15 +43,17 @@ def play_board(request):
     try:
         with transaction.atomic():
             board,given_board, status, action = update_board(pos, action, user_id, time)
-    except:
-        print("Fast Click! Data Base Locked")
-    return JsonResponse({"board": given_board.tolist(),
+
+            return JsonResponse({"board": given_board.tolist(),
                          "status": status, 
                          "user_id": user_id, 
                          "num_row": num_row, 
                          "num_col": num_col, 
                          "action": action
                          })
+    except:
+        print("Fast Click! Data Base Locked")
+        return JsonResponse({"message": "Wait"}, status = 401)
 
 @csrf_exempt
 def create_board(request):
