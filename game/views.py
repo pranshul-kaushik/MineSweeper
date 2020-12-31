@@ -6,6 +6,7 @@ from .models import board_info
 import sys
 sys.path.append(".")
 from bot.AI import AI
+from django.db import transaction
 
 
 import json
@@ -23,7 +24,10 @@ def bot(request):
     input_info = json.loads(request.body)
     user_id = input_info.get('user_id')
     time = float(input_info.get('timer'))
-    num_row, num_col, action, status, board =  AI(user_id, time)
+    num_row = int(input_info.get('num_row'))
+    num_col = int(input_info.get('num_col'))
+    print("-"*50, type(num_col))
+    num_row, num_col, action, status, board =  AI(user_id,num_row, num_col ,time)
     return JsonResponse({"board": board.tolist(), "status": status, "user_id": user_id,
                          "num_row": num_row, "num_col": num_col, "action": action})
 
@@ -36,7 +40,11 @@ def play_board(request):
     pos = (num_row,num_col)
     action = int(input_info.get('action'))
     time = float(input_info.get('timer'))
-    board,given_board, status, action = update_board(pos, action, user_id, time)
+    try:
+        with transaction.atomic():
+            board,given_board, status, action = update_board(pos, action, user_id, time)
+    except:
+        print("Fast Click! Data Base Locked")
     return JsonResponse({"board": given_board.tolist(),
                          "status": status, 
                          "user_id": user_id, 

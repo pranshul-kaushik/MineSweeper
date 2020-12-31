@@ -4,6 +4,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    transition: all .1s;
 }
 
 html{
@@ -143,7 +144,7 @@ hr.line{
 
 .key__block{
     height: 61rem;
-    width: 90rem;
+    width: 97rem;
     margin: 5rem auto;
     transform: translate(3rem ,-35rem);
     box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
@@ -167,8 +168,6 @@ hr.line{
 #entry h1{
     font-size: 5rem;
     transform: translate(20rem , 11rem);
-    
-
 }
 
 #entry input{
@@ -216,11 +215,11 @@ hr.line{
 #gridblock{
     height: 100%;
     width: 100%;
-    font-family: 'Shadows Into Light', cursive;
+    font-family: cursive;
     border-radius: 5px;
     background-color: rgb(246, 245, 255);
     padding: 1rem 1rem;
-    color: rgb(48, 47, 47);
+    color: rgb(75, 75, 75);
     font-weight: 400;
     text-shadow: 0px 0px 0px rgba(139, 139, 139, 0.733);
 }
@@ -228,10 +227,10 @@ hr.line{
 /* visual table */
 #myTable{
     position: relative;
-    border-spacing: .5rem;
+    border-spacing: .58rem .5rem;
     border-radius: 8px;
     box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
-    padding: .8rem .8rem;
+    padding: .7rem .3rem .8rem .6rem;
     z-index: 2;
 }
 
@@ -255,32 +254,56 @@ hr.line{
     border-radius: 2px;
     transform: scaleX(1.1) scaleY(1.1);
     transition: all .2s;
+    text-align: center;
 }
 
 #myTable td:hover{
     transform: scale(1.2) ;
 }
 
+#myTable td:active{
+    transform: scale(1) ;
+}
+
 .grid-flag{
-    height: 2rem;
-    width: 2rem;
-    object-fit: cover;
+    height: 1.8rem;
+    width: 1.5rem;
+    transform: translateY(4px);
+}
+
+.bomb-background{
+        background:conic-gradient(white, rgba(253, 0, 0,.1),white);
+        transform: scale(1.1);
+}
+
+.fbomb-background{
+    background:conic-gradient( white,rgba(0, 255, 0,.1),white);
+    transform: scale(1.1);
+}
+
+.grid-bomb{
+    height: 1.8rem;
+    width: 1.8rem;
 }
 
 
 /* data structure matrix */
 #matrix{
     position: absolute;
-    border-spacing: .5rem;
+    border-spacing: 0rem;
     border-radius: 8px;
     padding: .8rem .8rem;
 }
 
 #matrix td{
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 1px;
-    /* text-align: center; */
+    padding: 0;
+    margin: 0;
+    height: 3rem;
+    width: 3.1rem;
+    border: .5px solid rgba(94, 94, 94, 0.205);
+    border-radius: 2px;
+    font-size: 1.3rem;
+    text-align: center;
 }
 
 /* flag box at right side */
@@ -415,9 +438,75 @@ hr.line{
     padding: 0 1rem;
 }
 
+/* winner/loser popup */
+.popup{
+    position: absolute;
+    z-index: 4;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.699);
+    transition: all .1s;
+
+}
+
+.popup-wrapper{
+    height: 25rem;
+    width: 50rem;
+    margin: 15rem auto;
+    border-radius: 2rem;
+    background-color: rgb(36, 36, 36);
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.281);
+    transform: scale(0);
+}
+
+.gif{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-left: -2rem;
+    background-image: url(firework.gif);
+}
+
+.gif img{
+    padding: 5rem 1rem;
+    width: 115%;
+    height: 115%;
+    object-fit: cover;
+}
 
 
+/* loser */
+.popup-lose{
+    position: absolute;
+    z-index: 4;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.699);
+    transition: all .3s;
+}
 
+.popup-wrapper-lose{
+    height: 25rem;
+    width: 50rem;
+    margin: 15rem auto;
+    border-radius: 2rem;
+    background-color: white;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.281);
+    transform: scale(0);
+    overflow: hidden;
+}
+
+.gif-lose{
+    width: 85%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gif-lose img{
+    padding: 0 5rem;
+    width: 122%;
+    height: 110%;
+}
 
 /* keyframes animations */
 @keyframes mymove{

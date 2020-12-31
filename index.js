@@ -51,7 +51,7 @@ function createData(data,a,b){
         for (var j=0; j<b; j++) {
              cell = row.insertCell(j);  
              cell.innerHTML = checkVal(data.board[i][j]);
-             cell.id =  'cellNo:'+i +'/'+j;  
+             cell.id =  'cellNo:'+i +'/'+j; 
         }
     }   
 }
@@ -90,6 +90,15 @@ function createData(data,a,b){
 var askDetail = function(val){
     document.querySelector(DOMstrings.entry).classList.remove("none"); 
 
+    document.querySelector(DOMstrings.gridTable).classList.remove("easy");
+    document.querySelector(DOMstrings.dataStruc).classList.remove("easy");
+
+    document.querySelector(DOMstrings.gridTable).classList.remove("med");
+    document.querySelector(DOMstrings.dataStruc).classList.remove("med");
+
+    document.querySelector(DOMstrings.gridTable).classList.remove("hard");
+    document.querySelector(DOMstrings.dataStruc).classList.remove("hard");
+
     if(val == 'easy'){
         createGrid(10,10);
         document.querySelector(DOMstrings.gridTable).classList.add("easy");
@@ -121,12 +130,16 @@ var UIupdate = function(data,act,level){
     
     if(act == 1){
         ele = document.getElementById('cellNo-'+row+'/'+col);
-        ele.innerHTML='<img src="flag.png" alt="" class="grid-flag">';
+        ele1 = document.getElementById('cellNo:'+row+'/'+col);
+        ele.innerHTML='<img src="black_flag.png" alt="" class="grid-flag">';
+        ele1.innerHTML = '#';
     }
 
     else if(act == -1){
         ele = document.getElementById('cellNo-'+row+'/'+col);
+        ele1 = document.getElementById('cellNo:'+row+'/'+col);
         ele.innerHTML=' ';
+        ele1.innerHTML=' ';
     }
     else if(act == 0){
         for (var i=0; i<max_row; i++){ 
@@ -140,7 +153,15 @@ var UIupdate = function(data,act,level){
                     ele.style.transform = "rotateY(180deg)";
                     ele.style.transform = "scale(0)";
                     ele.setAttribute('clicked','true') ;
-                    ele1.innerHTML = '<img src="bomb.png" alt="" class="grid-flag">';
+
+                    if(ele1.innerHTML == '#'){
+                        ele1.classList.add('fbomb-background');
+                    }    
+                    else
+                        ele1.classList.add('bomb-background');
+
+                    ele1.innerHTML = '<img src="black_bomb.png" alt="" class="grid-bomb">';
+                   
                 }
                 else if(data.board[i][j] === "0"){
                     ele.style.transform = "rotateY(180deg)";
@@ -158,25 +179,58 @@ var UIupdate = function(data,act,level){
     }
 
     if(data.status == -1){
-        stopWatch();
+        pauseWatch();
         for (var i=0; i<max_row; i++) 
         for (var j=0; j<max_col; j++){
             ele = document.getElementById('cellNo-'+i+'/'+j);
             ele.setAttribute('clicked','true') ;   
         }
-            alert('You Lost');
-    }
-    else if(data.status == 1){
-        stopWatch();
-        for (var i=0; i<max_row; i++) 
-        for (var j=0; j<max_col; j++){
-            ele = document.getElementById('cellNo-'+i+'/'+j);
-            ele.setAttribute('clicked','true') ;   
-        }
-            alert("Yow Won");
 
+        setTimeout(
+            function(){
+                document.querySelector('.popup-lose').classList.remove('none');
+
+                setTimeout(() =>{
+                    document.querySelector('.popup-wrapper-lose').style.transform = "scale(1)";
+                },500);
+
+                setTimeout(() => {
+                    document.querySelector('.popup-wrapper-lose').style.transform = "scale(0)";
+
+                    setTimeout(() =>{
+                        document.querySelector('.popup-lose').classList.add('none');
+                    },500);
+
+                }, 5000);
+            },100);      
     }
-       
+
+    else if(data.status == 1){
+        pauseWatch();
+        for (var i=0; i<max_row; i++) 
+        for (var j=0; j<max_col; j++){
+            ele = document.getElementById('cellNo-'+i+'/'+j);
+            ele.setAttribute('clicked','true') ;   
+        }
+        
+        setTimeout(
+            function(){
+                document.querySelector('.popup').classList.remove('none');
+
+                setTimeout(() =>{
+                    document.querySelector('.popup-wrapper').style.transform = "scale(1)";
+                },500);
+
+                setTimeout(() => {
+                    document.querySelector('.popup-wrapper').style.transform = "scale(0)";
+
+                    setTimeout(() =>{
+                        document.querySelector('.popup').classList.add('none');
+                    },500);
+
+                }, 5000);
+            },100);             
+    }      
 }
 
 
@@ -266,6 +320,7 @@ document.querySelector(DOMstrings.btn).addEventListener('click', function(){
  document.querySelector(DOMstrings.gridTable).addEventListener('mouseup', btnGrid);
 
 
+
 //  stop watch 
     var minute = 0;
     var second = 0;
@@ -303,6 +358,10 @@ function stopWatch(){
      sec = '00';
      min = '00';
      document.querySelector(DOMstrings.time).innerHTML =   min + ":"+ sec;
+}
+
+function pauseWatch(){
+    clearInterval(myVar);
 }
 
 
@@ -351,8 +410,7 @@ var updateBoard = function(row,col,user_id,action,timer,level){
             return response.json();
     })
     .then(function(data){
-        console.log(data);
-        UIupdate(data,data.action,level);
+                UIupdate(data,data.action,level);
     });
 }
 

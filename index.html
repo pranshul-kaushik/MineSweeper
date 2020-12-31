@@ -9,7 +9,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Minesweeper</title>
 </head>
@@ -23,9 +22,26 @@
             <hr class="line">
         </div>
 
+        <!-- Winner /Loser page -->
+        <section class="none popup">
+            <div class="popup-wrapper">
+                <div class="gif">
+                     <img src="winner.gif" alt="">
+                </div>
+            </div>
+        </section>
+
+        <section class="none popup-lose">
+            <div class="popup-wrapper-lose">
+                <div class="gif-lose">
+                     <img src="Loser.gif" alt="">
+                </div>
+            </div>
+        </section>
+
 
         <!-- Inside page -->
-        <section class="background">
+        <section id="game" class="background">
 
             <!-- logo part      -->
             <div class="logo">

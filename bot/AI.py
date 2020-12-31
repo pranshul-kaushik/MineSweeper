@@ -7,12 +7,12 @@ from game.game_logic.opening_cells import update_board
 from game.models import *
 import time
 
-def AI(user_id , timer):
+def AI(user_id , num_row, num_col, timer):
     _user_info = user_info.objects.filter(user_id= user_id)
-    
-    num_row ,num_col = 10,10
+    print("-"*50, type(num_col))
 
     def createBoard_bot(_user_info):
+        print("-"*50, type(num_col))
         board =createBoard(num_row,num_col)
         _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
         _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
@@ -188,7 +188,7 @@ def AI(user_id , timer):
         except:
             pass
 
-        board, given_board, status = update_board(
+        board, given_board, status, action = update_board(
             (x,y), 
             action, 
             user_id,
