@@ -3,7 +3,7 @@ import random
 from .bring_board import createBoard
 from game.models import board_info, user_info
 
-def new_board(num_row, num_col, user_id):
+def new_board(num_row, num_col, user_id, bot, game_type):
     try:
         user = user_info.objects.get(user_id = user_id)
     except:
@@ -12,19 +12,15 @@ def new_board(num_row, num_col, user_id):
         )
         user.save()
 
-    # board = board_info.objects.filter()
-    # if board.count():
-    #     return board[0].to_give_board
-
-    # else:
-    #_board_info = board_info.objects.filter(user_id= user, status= 0)
-
-    #if len(_board_info) == 0:
-    board =createBoard(num_row,num_col)
+    board = createBoard(num_row,num_col)
     _to_give_board = np.array(['.']*num_row*num_col).reshape(num_row,num_col)
+    _prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
+                         ]).reshape(num_row, num_col) 
     _board_info = board_info(
         true_board = board,
-        is_bot= False,
+        is_bot = bot,
+        game_type = game_type,
+        prob_board = _prob_board if bot else None,
         user_id= user,
         to_give_board = _to_give_board,
         cell_left = num_row*num_col,
@@ -32,11 +28,7 @@ def new_board(num_row, num_col, user_id):
     )    
     _board_info.save()
     return _board_info.to_give_board, _board_info.number_bombs 
-    #else:
-    #    _board_info = board_info.objects.filter(user_id= user, status = 0)
-    #    _board_info = _board_info.latest('updated_on')
 
-    #    return _board_info.to_give_board
 
 
         
@@ -137,14 +129,12 @@ def update_board(choice ,action, user_id, time):
                     else:
                         open_cell = []
                         cell_left -= len(Press_land(Cell(choice), open_cell))
-        print(given_board, choice)
 
         _board_info.true_board = board
         _board_info.to_give_board = given_board
         _board_info.cell_left = cell_left
         _board_info.number_bombs = int(0.15*(num_row*num_col))
 
-        print(f"cell left", "-"*7,">", cell_left)
         if cell_left == 0:
             _board_info.status = 1
             

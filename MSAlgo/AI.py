@@ -11,7 +11,6 @@ number_bomb = number_bomb = int(0.15*(num_col*num_row))
 cell_left  = num_col * num_row
 prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
                     ]).reshape(num_row, num_col)
-#choice_list = [[i,j] for i in range(num_row) for j in range(num_col)]
 
 def Number (choice):
     return board[choice[0]][choice[1]].number
@@ -71,7 +70,6 @@ def combination(n, r):
 time_l = []
 status = 0
 while not status:
-    #start = time.time()
     choice_list = [[i,j] for i in range(num_row) for j in range(num_col) if not board[i][j].is_checked]
     cell_left = len(choice_list)
     action = 0
@@ -112,7 +110,6 @@ while not status:
                         min_prob_of_bomb[0] = prob_board[i][j]
                         min_prob_of_bomb[1] = [i,j]
     
-    #print(prob_board)
     if max_prob_of_bomb[0] > 0.9 or min_prob_of_bomb[0] < 0.2:
         if max_prob_of_bomb[0] > 0.9:
             x,y = max_prob_of_bomb[1]
@@ -121,31 +118,17 @@ while not status:
             x,y = min_prob_of_bomb[1]
             action = 0
     else:
-        # while True:
-        #     print("a")
-        #     x,y = random.choice(choice_list)
-        #     if prob_board[x][y] == 0:
-        #         break  
         left_cell_prob = [[prob_board[x][y],[x,y]] for x,y in choice_list]
         pick_in_this = [prob_cell[1] for prob_cell in left_cell_prob if prob_cell[0] == min(left_cell_prob)[0]]
         x,y = random.choice(pick_in_this)
-        print(f"({x},{y}) prob {prob_board[x][y]}")
     try:
         if len(choice_list):
             choice_list.remove([x,y])
     except:
         pass
-    #print(status)
-    #print("\nmin prob :- ",min_prob_of_bomb, " max prob :- ", max_prob_of_bomb, " choice :-", (x,y))
     board, given_board, status = update_board((x,y), action, num_row,num_col, board,given_board,number_bomb,cell_left)
     prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
                     ]).reshape(num_row, num_col)
-    print(given_board,"\n\n")
-    print(status)
-    #while master != "A":
-    #    master = input()
-    #end = time.time()
-    #time_l.append(end - start)
-    #print(int(max(time_l)* 1000))
-#print("WON" if status == 1 else "LOST")
+
+
  

@@ -8,6 +8,12 @@ game_status = (
     (1, "Won")
 )
 
+game_type = (
+    (1, "Easy"),
+    (2, "Medium"),
+    (3, "Hard")
+)
+
 class user_info(models.Model):
     user_id = models.TextField(max_length= 12, unique= True, primary_key= True)
 
@@ -21,4 +27,5 @@ class board_info(models.Model):
     cell_left = models.IntegerField()
     number_bombs = models.IntegerField()
     timer = models.FloatField(null= True)
+    game_type = models.IntegerField(choices= game_type)
     status = models.IntegerField(choices= game_status, default= 0)

@@ -379,7 +379,9 @@ var createBoard = function(level,user_id){
         body: JSON.stringify({
                 "num_row":num_row,	/* num_row -> It is the number of rows in board*/
                 "num_col":num_col,	/*# num_col -> It is the number of columns in board*/
-                "user_id":user_id	//#user_id  -> Username
+                "user_id":user_id,
+                "is_bot" :0,	//#user_id  -> Username
+                "game_type" : (level == "easy") ? 1 : (level == "med") ? 2 : (level == "hard") ? 3 : -1
                 }   )
     }
     )
