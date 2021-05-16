@@ -58,4 +58,6 @@ def create_board(request):
 
 @csrf_exempt
 def show_highscore(request):
-    return JsonResponse({"high_score":list(board_info.objects.filter(status = 1, is_bot= False).order_by("timer").values("user_id", "game_type", "timer"))})
+    input_info =json.loads(request.body)
+    game_type = int(input_info.get('game_type'))
+    return JsonResponse({"high_score":list(board_info.objects.filter(status = 1, game_type = game_type, is_bot= False).order_by("timer").values("user_id", "timer"))})

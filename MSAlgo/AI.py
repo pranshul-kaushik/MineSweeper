@@ -1,21 +1,22 @@
+import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 import random
 from bring_board import createBoard
 from opening_cells import update_board
 import time
-num_row, num_col = 20,17
-board = createBoard(num_row, num_col)
-given_board = np.array(["*" for i in range(num_row) for j in range(num_col)
-                    ]).reshape(num_row, num_col)
-number_bomb = number_bomb = int(0.15*(num_col*num_row))
-cell_left  = num_col * num_row
-prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
-                    ]).reshape(num_row, num_col)
+import os
+import typer
+from rich.console import Console
 
-def Number (choice):
+app = typer.Typer()
+console = Console()
+
+def Number(board, choice):
     return board[choice[0]][choice[1]].number
 
-def Is_checked (choice, put =None):
+def Is_checked(board, choice, put =None):
     
     if put != None:
         board[choice[0]][choice[1]].is_checked = put
@@ -23,20 +24,19 @@ def Is_checked (choice, put =None):
     else:
         return board[choice[0]][choice[1]].is_checked
 
-def Adj(choice):
+def Adj(board, choice):
     return board[choice[0]][choice[1]].adj
 
-def Cell(choice):
+def Cell(board, choice):
     return board[choice[0]][choice[1]]
 
-def prob_of_bomb_in_area(cell):
-    global prob_board
+def prob_of_bomb_in_area(board, prob_board, cell):
     bomb_left_to_mark = cell.number
     number_of_places_bomb_can_be = 0
     for each_adj in cell.adj.values():
-        if each_adj and Cell(each_adj).is_flaged:
+        if each_adj and Cell(board, each_adj).is_flaged:
             bomb_left_to_mark -= 1
-        if each_adj and not Cell(each_adj).is_checked:
+        if each_adj and not Cell(board, each_adj).is_checked:
             number_of_places_bomb_can_be += 1
     if bomb_left_to_mark != 0:
         prob = combination(number_of_places_bomb_can_be -1 , bomb_left_to_mark -1) / \
@@ -45,8 +45,8 @@ def prob_of_bomb_in_area(cell):
         prob = 0.00001
            
     for each_adj in cell.adj.values():
-        if each_adj and not Cell(each_adj).is_checked:
-            position = Cell(each_adj).pos
+        if each_adj and not Cell(board, each_adj).is_checked:
+            position = Cell(board, each_adj).pos
             if prob != 0.00001 and prob_board[position[0]][position[1]] != 0.00001:
                 max_prob = max(prob_board[position[0]][position[1]],
                                                           prob)
@@ -67,68 +67,134 @@ def combination(n, r):
     for i in range(1, n_r+1):
         n_r_fact *= i
     return n_fact/ (r_fact * n_r_fact)
-time_l = []
-status = 0
-while not status:
-    choice_list = [[i,j] for i in range(num_row) for j in range(num_col) if not board[i][j].is_checked]
-    cell_left = len(choice_list)
-    action = 0
-    master = ""
-    for i in range(num_row):
-        for j in range(num_col):
-            if board[i][j].is_checked and not board[i][j].is_flaged:
-                total_number_of_adj_checked=0
-                total_number_of_adj_none=0
-                for each_adj in board[i][j].adj.values():
-                    try:
-                        total_number_of_adj_checked += int(Cell(each_adj).is_checked)
-                    except:
-                        total_number_of_adj_none += 1
-                if (8 - total_number_of_adj_none - total_number_of_adj_checked) > 0:
-                    prob_of_bomb_in_area(board[i][j])
-    
-    max_prob_of_bomb = [0, [-1,-1]]
-    min_prob_of_bomb = [1, [-1,-1]]
-    for i in range(num_row):
-        for j in range(num_col):
-            if [i,j] in choice_list:
-                if prob_board[i][j] > max_prob_of_bomb[0]:
-                    max_prob_of_bomb[0] = prob_board[i][j]
-                    max_prob_of_bomb[1] = [i,j]
 
-                total_number_of_adj_checked=0
-                total_number_of_adj_flag=0
-                for each_adj in Cell([i,j]).adj.values():
-                    try:
-                        total_number_of_adj_checked += int(Cell(each_adj).is_checked)
-                        total_number_of_adj_flag += int(Cell(each_adj).is_flaged)
-                    except:
-                        continue
-
-                if total_number_of_adj_checked - total_number_of_adj_flag > 0:
-                    if prob_board[i][j] < min_prob_of_bomb[0]:
-                        min_prob_of_bomb[0] = prob_board[i][j]
-                        min_prob_of_bomb[1] = [i,j]
-    
-    if max_prob_of_bomb[0] > 0.9 or min_prob_of_bomb[0] < 0.2:
-        if max_prob_of_bomb[0] > 0.9:
-            x,y = max_prob_of_bomb[1]
-            action = 1
-        if min_prob_of_bomb[0] < 0.2:
-            x,y = min_prob_of_bomb[1]
-            action = 0
-    else:
-        left_cell_prob = [[prob_board[x][y],[x,y]] for x,y in choice_list]
-        pick_in_this = [prob_cell[1] for prob_cell in left_cell_prob if prob_cell[0] == min(left_cell_prob)[0]]
-        x,y = random.choice(pick_in_this)
-    try:
-        if len(choice_list):
-            choice_list.remove([x,y])
-    except:
-        pass
-    board, given_board, status = update_board((x,y), action, num_row,num_col, board,given_board,number_bomb,cell_left)
+def solver(board, num_row, num_col, alpha):
+    given_board = np.array(["*" for i in range(num_row) for j in range(num_col)
+                    ]).reshape(num_row, num_col)
+    number_bomb = number_bomb = int(0.15*(num_col*num_row))
+    cell_left  = num_col * num_row
     prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
                     ]).reshape(num_row, num_col)
 
+    status = 0
+    df = pd.DataFrame()
+    while not status:
+        action_type = "random"
+        choice_list = [[i,j] for i in range(num_row) for j in range(num_col) if not board[i][j].is_checked]
+        cell_left = len(choice_list)
+        action = 0
+        for i in range(num_row):
+            for j in range(num_col):
+                if board[i][j].is_checked and not board[i][j].is_flaged:
+                    total_number_of_adj_checked=0
+                    total_number_of_adj_none=0
+                    for each_adj in board[i][j].adj.values():
+                        try:
+                            total_number_of_adj_checked += int(Cell(board, each_adj).is_checked)
+                        except:
+                            total_number_of_adj_none += 1
+                    if (8 - total_number_of_adj_none - total_number_of_adj_checked) > 0:
+                        prob_of_bomb_in_area(board, prob_board, board[i][j])
 
- 
+        max_prob_of_bomb = [0, [-1,-1]]
+        min_prob_of_bomb = [1, [-1,-1]]
+        for i in range(num_row):
+            for j in range(num_col):
+                if [i,j] in choice_list:
+                    if prob_board[i][j] > max_prob_of_bomb[0]:
+                        max_prob_of_bomb[0] = prob_board[i][j]
+                        max_prob_of_bomb[1] = [i,j]
+
+                    total_number_of_adj_checked=0
+                    total_number_of_adj_flag=0
+                    for each_adj in Cell(board, [i,j]).adj.values():
+                        try:
+                            total_number_of_adj_checked += int(Cell(board, each_adj).is_checked)
+                            total_number_of_adj_flag += int(Cell(board, each_adj).is_flaged)
+                        except:
+                            continue
+
+                    if total_number_of_adj_checked - total_number_of_adj_flag > 0:
+                        if prob_board[i][j] < min_prob_of_bomb[0]:
+                            min_prob_of_bomb[0] = prob_board[i][j]
+                            min_prob_of_bomb[1] = [i,j]
+
+        if max_prob_of_bomb[0] > 1 - alpha or min_prob_of_bomb[0] < alpha:
+            action_type = "probability"
+            if max_prob_of_bomb[0] > 1 - alpha:
+                x,y = max_prob_of_bomb[1]
+                action = 1
+            if min_prob_of_bomb[0] < alpha:
+                x,y = min_prob_of_bomb[1]
+                action = 0
+        else:
+            action_type = "random"
+            left_cell_prob = [[prob_board[x][y],[x,y]] for x,y in choice_list]
+            pick_in_this = [prob_cell[1] for prob_cell in left_cell_prob if prob_cell[0] == min(left_cell_prob)[0]]
+            x,y = random.choice(pick_in_this)
+        try:
+            if len(choice_list):
+                choice_list.remove([x,y])
+        except:
+            pass
+        board, given_board, status = update_board((x,y), action, num_row,num_col, board,given_board,number_bomb,cell_left)
+        prob_board = np.array([0.0 for i in range(num_row) for j in range(num_col)
+                        ]).reshape(num_row, num_col)
+        if status == 0:
+            print("\n\n", given_board)
+        elif status == 1:
+            console.print("\n\n", given_board, style= "green")        
+        else:
+            console.print("\n\n", given_board, style= "red")     
+
+        data = {
+            "action_type": [action_type],
+            "action" : [action]
+        }
+        df = pd.concat([df, pd.DataFrame(data)])   
+
+    return df, {"action_type": action_type,"status": status}
+
+def check_threshold(threshold):
+    if threshold < 0.0 or threshold > 0.5:
+        console.print(f"Threshold is the cutoff value to classify a mine. It has to be within 0.0 to 0.5 not {threshold}", style= 'red')
+        raise typer.Exit(code= 1)
+    return threshold
+
+@app.command()
+def main(num_row: int = typer.Option(43, help = "Number of Rows"), 
+         num_col: int = typer.Option(18, help = "Number of Columns"),
+         threshold: float = typer.Option(0.1, 
+                                         callback= check_threshold,
+                                         help = "Threshold is the cutoff value to classify a mine. It has to be within 0.0 to 0.5")):
+    board = createBoard(num_row, num_col)
+    df, status = solver(board, num_row, num_col, threshold)
+    df.action = df.action.replace({0: "left", 1: "right"})
+    ct = pd.crosstab(df.action_type, df.action)
+    print(ct,"\n", status)
+    stacked = ct.stack().reset_index().rename(columns={0:'value'})
+    sns.barplot(x=stacked.action_type, y=stacked.value, hue=stacked.action)
+    plt.title("Lost" if status["status"] == -1 else "Win")
+    plt.show()
+    os. system("pause")
+
+if __name__ == "__main__":
+    console.print(
+        """
+Each symbol has a meaning  discribed below
+
+
+* -> Uncovered Cell
+
+(0 - 8) -> Number of the Cell
+
+# -> Flag
+        """,
+        style= "bold green"
+    )
+    sure = typer.confirm("Shall will start?")    
+    if sure:
+        app()
+    else:
+        console.print("Cool", style= "bold red")
+    
