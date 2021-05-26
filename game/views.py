@@ -7,8 +7,6 @@ import sys
 sys.path.append(".")
 from bot.AI import AI
 from django.db import transaction
-
-
 import json
 
 @csrf_exempt

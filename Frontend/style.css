@@ -4,6 +4,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
     transition: all .1s;
 }
 
@@ -13,56 +14,23 @@ html{
 
 body{
     font-size: 1.6rem;
-    color: black;
-    text-shadow: 0px 0px 3px rgba(46, 46, 46, 0.733);
-    font-family: 'Permanent Marker', cursive;  
-}
-
-.background{
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    background-color: rgb(246, 245, 255);
-    overflow: hidden;
-}
-
-.logo{
-    position: absolute;
-    transform: translate(10rem, 4rem) ;
-}
-
-.neu{             
-    box-shadow:  3px 3px 6px #cec5c5, 
-                 -3px -3px 6px  white;
-}
-
-.logo__box{
-    padding: 1.5rem 2rem;
-    border-radius: 5px;
-    font-size: 3rem;
-    font-weight: 700 ; 
-}
-
-.logo__text{
-    margin-top: 3rem;
-    margin-left: -3rem;
-    font-size: 1.6rem;
-    letter-spacing: 1px;
-    font-weight: 700;
+    color: white;
+    text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.733);
 }
 
 
 /* Introduction page  */
 .header{
     z-index: 5;
-    background-color: rgb(246, 245, 255);
+    background: linear-gradient(120deg, rgb(56, 56, 56) 0%, rgb(68, 68, 68) 100%) ;
     position: absolute;
     height: 100vh;
     width: 100%;
     overflow: hidden;
-    font-family: 'Permanent Marker', cursive;
     animation: pageload .2s 3s;
     animation-fill-mode: forwards;  
+    color: white;
+    font-family: 'Permanent Marker', cursive;
 }
 
 .heading{
@@ -70,7 +38,7 @@ body{
     transform: translate(30rem , 20rem);
     animation: mymove .7s 1s;
     animation-fill-mode: both;
-
+    font-family: 'Permanent Marker', cursive;
 }
 
 .text{
@@ -78,13 +46,14 @@ body{
     transform: translate(35rem , 20rem);
     animation: textmove .7s 1s;
     animation-fill-mode: both;
+    font-family: 'Permanent Marker', cursive;
 }
 
 hr.line{
     display: inline-block;
-    border: 10px solid black;
-    box-shadow: 0px 0px 8px  rgba(0,0,0, 0.705) ;
-    border-radius: 5px;
+    border: 10px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 8px  rgba(255, 255, 255, 0.705) ;
+    border-radius: 2rem;
     width: 75rem;
     transform: translate(28rem , 25rem);
     animation: linemove .7s 2s;
@@ -93,71 +62,293 @@ hr.line{
 
 
 
-/* selectbox */
+.background-pic{
+    background: linear-gradient(120deg, rgb(56, 56, 56) 0%, rgb(68, 68, 68) 100%) ;
+    /* height: 625px;
+    width: 1349px; */
+    height: 700px;
+    width: 1400px;
+    position: sticky;
+}
 
-   .select__box{
-    width: 22rem;
-    height: 35rem;
-    transform: translate(5rem , 24rem);
-    padding: 1.5rem 2rem;
+
+/* name section */
+.naming{
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    left: 32%;
+    background-color: rgb(80, 80, 80);
+    box-shadow:  inset 1px 1px 4px #005f4b , inset -1px -1px 4px #03ffc8 ; 
     border-radius: 5px;
+    font-family: 'Teko', sans-serif;  
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: rgb(0, 255, 200);
+    font-weight: 500;
+}
+
+.player-name{
+    font-size: 2.2rem;
+    padding: 1.2rem 1.5rem 1.2rem 1.5rem; 
+}
+
+
+/* clock */
+
+.clock__box{
+    position: absolute;
+    top: 0;
+    right: 10%;
+    background-color: rgb(80, 80, 80);
+    padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+    box-shadow:  inset 1px 1px 4px #005f4b , inset -1px -1px 4px #03ffc8 ; 
+    border-radius: 5px;
+    font-family: 'Teko', sans-serif;
+    display: inline-block;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: rgb(0, 255, 200);
+    font-weight: 500;
+}
+
+.background{
+    background: linear-gradient(120deg, rgb(34, 34, 34) 0%, rgb(39, 39, 39) 30% , rgb(48, 48, 48) 100%) ;
+    box-shadow: 4rem 2rem 4rem rgba(0, 0, 0, 0.685);
+    border-radius: 1rem;
+    display: flex;
+    overflow: hidden;
+    width: 1186px;
+    height: 550px;
+    transform: translate(10rem,5rem);
+}
+
+.neu{
+    box-shadow: 0rem 0rem 1rem rgba(0, 0, 0, 0.295) ;    
+}
+
+/* Left Section */
+.select__box{
+    width: 46.3rem;
+    border-radius: 0 2rem 2rem 0;
+    background-color: rgb(0, 255, 200) ;
    }
 
- 
+/* 1. Logo work */
 
-   #easy,
-   #medium,
-   #hard{
-       padding: .7rem 2rem;
-       font-size: 1.6rem;
-       border-radius: 20px;
-       border: none;
-       margin-bottom: 3rem;
-       margin-top: 3rem;
-       margin-left: 3rem;
-       font-family: 'Permanent Marker', cursive;
-       font-weight: 300;
-       background-color: rgb(246, 245, 255) ; 
-       box-shadow:2px 2px 4px 0px  #cec5c5,
-                   -3px -3px 4px 0px white ;
-        transition: all .2s;         
-   }
+.logo__wrapper{
+    display: flex;
+    width: 100%;
+    height: 11rem;
+    margin: 0 0 2rem 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.336);
+}   
 
-   .category:hover{
-    background-color: black !important;
-    color: rgb(246, 245, 255) !important;
-    box-shadow: 2px 2px 3px rgb(56, 56, 56), 
-               -1px -1px 3px rgb(194, 194, 194) !important;
-    transform: translateY(-.7rem) scale(1.1);            
-   }
+.logo__box{
+    width: 35%;
+}
 
-   .category:active{
-       transform: translateY(.2rem) scale(1);
-   }
+.logo{
+    background: linear-gradient(to right, rgb(0, 255, 200) 0%,rgb(0, 231, 181) 100%);
+    color: white;
+    text-shadow: 0px 0px 3px rgba(255, 254, 254, 0.733);
+    display: inline-block;
+    padding: 1.2rem 2rem;
+    border-radius: 50%;
+    font-size: 3rem;
+    font-weight: 700 ; 
+    transform: translate(2rem, 2rem) ;
+    font-family: 'Permanent Marker', cursive;
+}
 
-   .category:focus{
-       outline: none;
-   }
+.scroll{
+    overflow-y: scroll;
+    height: 62vh;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  .scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.144);
+  }
+   
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: rgb(133, 133, 133);
+    border-radius: 1rem;
+  }
+
+
+/* 2. logo tag */
+
+.logo__tag-box{
+    width: 50%;
+    padding: 4rem 0 0 1rem;
+}
+
+.logo__tag{
+    text-shadow: 0px 0px 2px rgba(255, 254, 254, 0.733);
+    letter-spacing: 1px;
+    display: inline-block;
+    font-size: 2rem;
+    font-family: 'Permanent Marker', cursive;
+    color: white;
+}
+
+
+
+
+/* 3. selection button */
+
+.select__difficulty{
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    padding: .5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.212);
+    border-radius: 1rem 0 0 1rem;
+    margin-left: 1rem;
+}
+
+.buttons{
+    padding: 1rem 1rem 2rem 2rem;
+    text-align: center;
+}
+
+#easy,
+#medium,
+#hard{
+    padding: .7rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    border: none;
+    margin: 1rem .5rem 0 0;
+    font-weight: 400;
+    color: rgb(36, 36, 36);
+    background-color: white  ; 
+    box-shadow: 0px 0px 4px rgb(0, 255, 200)  ;
+    transition: all .2s;         
+}
+
+.category:hover{
+background-color: black !important;
+color: rgb(246, 245, 255) !important;
+box-shadow: 2px 2px 3px rgba(56, 56, 56, 0.568), 
+            -1px -1px 3px rgb(194, 194, 194) !important;
+transform: translateY(-.3rem) scale(1.01);            
+}
+
+.category:active{
+    transform: translateY(.2rem) scale(1);
+}
+
+.category:focus{
+    outline: none;
+}
+
+/* 4. flag box */
+
+.frames{
+    background: rgba(255, 255, 255, 0.901);
+    border-radius: 1rem;
+    text-align: center;
+    color: rgb(104, 103, 103);
+    width: 50%;
+    margin: 1rem auto;
+    padding: 1rem 2rem;
+}
+
+.frames-bomb{
+    font-family: cursive;
+    padding: 0 0 1rem 0;
+    border-bottom: 1px solid rgb(189, 189, 189);
+
+}
+
+.frames-flag{
+    font-family: cursive;
+    padding: 1rem 0 0 0;
+}
+
+
+.img{
+    display: inline-block;
+    height: 3rem;
+    width: 3rem;
+}
+
+.img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.bomb-num{
+    display: inline-block;
+    letter-spacing: 3px;
+    transform: translateY(-.7rem);
+}
+
+.flag-num{
+    display: inline-block;
+    transform: translateY(-1rem);
+    letter-spacing: 3px;
+}
+
+/* 5. Player stat */
+
+
+.list__block{
+    width: 90%;
+    padding:0 1rem;
+    margin: 2rem auto;
+    background-color: rgba(255, 255, 255, 0.904);
+    border-radius: 1rem;
+    color: rgb(87, 87, 87);
+}
+
+.list{
+    list-style-type: decimal;
+}
+
+.list__items{
+    display: flex;
+    padding: 1rem;
+    border-bottom:1px solid rgb(216, 216, 216) ;
+}
+
+.list__player{
+    display: inline-flex;
+    width: 80%;
+}
+
+.list__time{
+    display: inline-flex;
+    width: 20%;
+}
+
 
 
 /* middle box content */
 
 .key__block{
     height: 61rem;
-    width: 97rem;
-    margin: 5rem auto;
-    transform: translate(3rem ,-35rem);
+    width: 128rem;
     box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
-    border-radius: 5px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.575),rgba(255, 255, 255, 0.575)),url('./cherry.png');
+    background-size: cover;
+    border-radius: 2rem 0 0 2rem;
+    background-position-y: -15rem;
 }
-
 
 /* Entry Detail block */
 #entry{
     height: 100%;
     width: 100%;
-    background-color: rgb(246, 245, 255);
-    border-radius: 5px;
+    border-radius: 2rem 0 0 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgb(54, 54, 54);
     transition: all .2s;
 }
 
@@ -167,7 +358,7 @@ hr.line{
 
 #entry h1{
     font-size: 5rem;
-    transform: translate(20rem , 11rem);
+    transform: translate(25rem , 13rem);
 }
 
 #entry input{
@@ -175,22 +366,21 @@ hr.line{
     outline: none;
     border-radius: 5px;
     padding: 1rem 1.5rem;
-    transform: translate(25rem,15rem);
+    transform: translate(30rem,17rem);
     width: 30rem;
     background-color: rgba(255, 255, 255, 1);
 }
 
 .play-btn{
     border: none;
-    border-radius: 3rem;
-    padding: 1rem 2rem;
-    font-family: 'Permanent Marker', cursive;
-    font-weight: 300;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem 1.5rem 2rem;
     background-color: rgb(246, 245, 255) ; 
-    box-shadow:2px 2px 4px 0px  #cec5c5,
-                -3px -3px 4px 0px white ;
+    box-shadow:1px 1px 4px 0px  #00000063,
+                -1px -1px 4px 0px rgba(255, 255, 255, 0.507) ;
     font-size: 2.5rem;
-    transform: translate(4rem,26rem);
+    font-weight: 500;
+    transform: translate(9rem,26rem);
     transition: all .2s;
 }
 
@@ -199,11 +389,11 @@ hr.line{
     color: rgb(246, 245, 255) ;
     box-shadow: 2px 2px 3px rgb(56, 56, 56), 
                -1px -1px 3px rgb(194, 194, 194) ;
-    transform: translate(4rem,25.3rem) scale(1.1);
+    transform: translate(9rem,25.3rem) scale(1.1);
 }
 
 .play-btn:active{
-    transform: translate(4rem,26.3rem) scale(1);
+    transform: translate(9rem,26.3rem) scale(1);
 }
 
 .play-btn:focus{
@@ -216,10 +406,10 @@ hr.line{
     height: 100%;
     width: 100%;
     font-family: cursive;
-    border-radius: 5px;
-    background-color: rgb(246, 245, 255);
+    border-radius: 2rem 0 0 2rem;
+    background-color: rgba(0, 0, 0, 0.719);
     padding: 1rem 1rem;
-    color: rgb(75, 75, 75);
+    color: rgb(255, 255, 255);
     font-weight: 400;
     text-shadow: 0px 0px 0px rgba(139, 139, 139, 0.733);
 }
@@ -229,7 +419,7 @@ hr.line{
     position: relative;
     border-spacing: .58rem .5rem;
     border-radius: 8px;
-    box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
+    box-shadow:  inset 1px 1px 4px #000000 , inset -1px -1px 4px rgba(223, 223, 223, 0.644) ;  
     padding: .7rem .3rem .8rem .6rem;
     z-index: 2;
 }
@@ -244,13 +434,14 @@ hr.line{
 
 .hard{
     transform: translate(0rem,0rem);
+    border-radius: 2rem 0 0 2rem;
 }
 
 #myTable td{ 
     height: 2.5rem;
     width: 2.5rem;
-    background-color: rgb(246, 245, 255);
-    box-shadow:  inset 1px 1px 4px rgb(223, 223, 223), inset -1px -1px 4px #101114  ;  
+    background-color: #616161;
+    box-shadow:  inset 1px 1px 4px rgb(255, 255, 255), inset -1px -1px 4px #000000  ;  
     border-radius: 2px;
     transform: scaleX(1.1) scaleY(1.1);
     transition: all .2s;
@@ -261,9 +452,9 @@ hr.line{
     transform: scale(1.2) ;
 }
 
-#myTable td:active{
+/* #myTable td:active{
     transform: scale(1) ;
-}
+} */
 
 .grid-flag{
     height: 1.8rem;
@@ -272,12 +463,12 @@ hr.line{
 }
 
 .bomb-background{
-        background:conic-gradient(white, rgba(253, 0, 0,.1),white);
+        background:conic-gradient(white, rgba(253, 0, 0, 0.205),white);
         transform: scale(1.1);
 }
 
 .fbomb-background{
-    background:conic-gradient( white,rgba(0, 255, 0,.1),white);
+    background:conic-gradient( white,rgba(0, 255, 0,.4),white);
     transform: scale(1.1);
 }
 
@@ -300,143 +491,14 @@ hr.line{
     margin: 0;
     height: 3rem;
     width: 3.1rem;
-    border: .5px solid rgba(94, 94, 94, 0.205);
+    border: .5px solid rgba(218, 218, 218, 0.205);
     border-radius: 2px;
     font-size: 1.3rem;
     text-align: center;
 }
 
-/* flag box at right side */
-.flag__block{
-    transform: translate(130rem,-85rem);
-    height: 40rem;
-    width: 20rem;
-    border-radius: 5px;
-}
 
-.img{
-    display: inline-block;
-    height: 5rem;
-    width: 5rem;
-    
-}
 
-.img img{
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.frames-bomb{
-    transform: translate(2rem,3rem);
-}
-
-.frames-flag{
-    transform: translate(2rem , 6rem);
-}
-
-.frames-bomb p{
-    display: inline-block;
-    transform: translateY(-1rem);
-}
-
-.frames-flag p{
-    display: inline-block;
-    transform: translateY(-1rem);
-}
-
-/* top-box */
-
-.top{
-    width: 70%;
-    height: 18rem;
-    margin: 2rem auto ;
-    border-radius: 5px;
-    box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
-    transform: translateY(7rem);
-}
-
-.top__heading{
-    font-size: 2rem;
-    padding: 1rem 2rem;
-    padding-left: 3rem;
-}
-
-/* clock */
-
-.clock__box{
-    height: 15rem;
-    width: 15rem;
-    position: absolute;
-    top: 4rem;
-    right: 5rem;
-}
-
-.clock{
-    border-radius:50% ;
-    height: 120px;
-    width: 120px;
-    position: absolute;
-    top: 0;
-    left: 0;          
-}
-
-.clock::after{
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 90%;
-    height: 90%;  
-    border-radius: 50%;
-    box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
-    z-index: 1;
-}
-
-.clock span{
-    position: absolute;
-    font-family: 'Teko', sans-serif;
-    display: inline-block;
-    top: 0;
-    left: 0;
-    transform: translate(21px,60px);
-    width: 75px;
-    height: 35px;
-    z-index: 2;
-    border-radius: 5px;
-    font-size: 2.3rem;
-    padding: 5px 5px;
-    box-shadow:  inset 1px 1px 4px #101114 , inset -1px -1px 4px rgb(223, 223, 223) ;  
-    letter-spacing: 2px;
-}
-
-.clock h1{
-    position: absolute;
-    display: inline-block;
-    top: 0;
-    left: 0;
-    text-transform: uppercase;
-    transform: translate(22px,22px);
-    width: 75px;
-    height: 35px;
-    z-index: 2;
-    border-radius: 5px;
-    font-size: 2.3rem;
-}
-
-/* name section */
-.naming{
-    position: absolute;
-    top: 1rem;
-    left: 80rem;
-    height: 3rem;
-    width: 50rem;
-}
-
-.player-name{
-    font-size: 2.2rem;
-    padding: 0 1rem;
-}
 
 /* winner/loser popup */
 .popup{
@@ -573,7 +635,7 @@ hr.line{
     }
 
     100%{
-        width: 0;
+        transform: scale(0);
         display: none;
     }
 }
@@ -585,3 +647,5 @@ hr.line{
     70% { transform: scale(1) rotateY(180deg); }
     100%{ transform: scale(0) ;}
 }
+
+

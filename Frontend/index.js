@@ -13,12 +13,15 @@ var DOMstrings = {
     inputName : '.input-name',
     dataStruc : '#matrix',
     time : '.time',
-    flag: '.grid-flag'
+    flag: '.grid-flag',
+    bombNum : '.bomb-num',
+    flagNum : '.flag-num',
+    flagWarn : '.flag-warn'
 };
 
 var table = document.getElementById("myTable");
 var matrix = document.getElementById("matrix");
-var myVar , level = 'none',str ,time=0;
+var myVar , level = 'none',str ,time=0,flag;
 
 // ---> check value function
 var checkVal = function(val){
@@ -46,6 +49,8 @@ function createGrid(a , b){
 }
 
 function createData(data,a,b){    
+    flag=0;
+    document.querySelector(DOMstrings.bombNum).innerHTML = ': '+ data.number_bombs;
     for (var i=0; i<a; i++) {
         row = matrix.insertRow(i);  
         for (var j=0; j<b; j++) {
@@ -120,34 +125,40 @@ var askDetail = function(val){
 
 // ---> UI update fuction
 var UIupdate = function(data,act,level){
-    var max_row,max_col,ele ,ele1;
-    if(level === 'easy'){ max_col =10; max_row =10;}
-    else if(level === 'med'){ max_col =16; max_row =16;}
-    else if(level === 'hard'){ max_col =30; max_row =19;}
+    var max_row,max_col,ele ,ele1,limit;
+    if(level === 'easy'){ max_col =10; max_row =10; limit=15; }
+    else if(level === 'med'){ max_col =16; max_row =16; limit=38;}
+    else if(level === 'hard'){ max_col =30; max_row =19; limit=85;}
     var row =  data.num_row;
     var col =  data.num_col;
      
     
     if(act == 1){
-        ele = document.getElementById('cellNo-'+row+'/'+col);
-        ele1 = document.getElementById('cellNo:'+row+'/'+col);
-        ele.innerHTML='<img src="black_flag.png" alt="" class="grid-flag">';
-        ele1.innerHTML = '#';
+        if(flag < limit){
+            ele = document.getElementById('cellNo-'+row+'/'+col);
+            ele1 = document.getElementById('cellNo:'+row+'/'+col);
+            ele.innerHTML='<img src="black_flag.png" alt="" class="grid-flag">';
+            ele1.innerHTML = '#';
+            flag +=act;
+            document.querySelector(DOMstrings.flagNum).innerHTML = ': '+ flag + '\\' + limit;
+        }
     }
 
     else if(act == -1){
         ele = document.getElementById('cellNo-'+row+'/'+col);
         ele1 = document.getElementById('cellNo:'+row+'/'+col);
         ele.innerHTML=' ';
-        ele1.innerHTML=' ';
+        ele1.innerHTML = ' ';
+        flag +=act;
+        document.querySelector(DOMstrings.flagNum).innerHTML = ': '+ flag + '\\' + limit;
     }
     else if(act == 0){
         for (var i=0; i<max_row; i++){ 
             for (var j=0; j<max_col; j++){
                 ele = document.getElementById('cellNo-'+i+'/'+j);
                 ele1 = document.getElementById('cellNo:'+i+'/'+j);
-                if(data.board[i][j] === "#"){
-                   console.log("Hiflag");
+                if(data.board[i][j] === '#'){
+                    console.log('Hi flag');
                 }
                 else if(data.board[i][j] === "-1"){
                     ele.style.transform = "rotateY(180deg)";
@@ -164,6 +175,7 @@ var UIupdate = function(data,act,level){
                    
                 }
                 else if(data.board[i][j] === "0"){
+                    ele1.innerHTML = ' ';
                     ele.style.transform = "rotateY(180deg)";
                     ele.style.transform = "scale(0)";
                     ele.setAttribute('clicked','true') ;
@@ -273,6 +285,8 @@ document.querySelector(DOMstrings.easy).addEventListener('click', function(){
     stopWatch();
     askDetail('easy');
     level = 'easy';
+    document.querySelector(DOMstrings.bombNum).innerHTML = ': 00';
+    document.querySelector(DOMstrings.flagNum).innerHTML = ': 00';
 });
 
  // 2. Medium game DOM
@@ -283,6 +297,9 @@ document.querySelector(DOMstrings.easy).addEventListener('click', function(){
     stopWatch();
     askDetail('med');
     level = 'med';
+    document.querySelector(DOMstrings.bombNum).innerHTML = ': 00';
+    document.querySelector(DOMstrings.flagNum).innerHTML = ': 00';
+
 });
 
   // 3. Hard game DOM
@@ -293,6 +310,9 @@ document.querySelector(DOMstrings.easy).addEventListener('click', function(){
     stopWatch();
     askDetail('hard');
     level = 'hard';
+    document.querySelector(DOMstrings.bombNum).innerHTML = ': 00';
+    document.querySelector(DOMstrings.flagNum).innerHTML = ': 00';
+
 });
 
   // 4. PLAY button DOM

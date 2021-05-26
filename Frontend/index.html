@@ -8,6 +8,8 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="style.css">
     <title>Minesweeper</title>
@@ -26,7 +28,7 @@
         <section class="none popup">
             <div class="popup-wrapper">
                 <div class="gif">
-                     <img src="winner.gif" alt="">
+                    <img src="winner.gif" alt="">
                 </div>
             </div>
         </section>
@@ -34,94 +36,126 @@
         <section class="none popup-lose">
             <div class="popup-wrapper-lose">
                 <div class="gif-lose">
-                     <img src="Loser.gif" alt="">
+                    <img src="Loser.gif" alt="">
                 </div>
             </div>
         </section>
 
 
         <!-- Inside page -->
-        <section id="game" class="background">
-
-            <!-- logo part      -->
-            <div class="logo">
-                <span class="logo__box neu">M</span>
-                <p class="logo__text">MINESWEEPER</p>
-            </div>
-
-
-            <!-- selecting area -->
-
-            <div class="select__box neu">
-                <button id="easy" class="category"> EASY</button>
-                <button id="medium" class="category">MEDIUM</button>
-                <button id="hard" class="category">HARD</button>
-
-
-            </div>
-
-
-            <!-- key box -->
-            <section class="key__block">
-                <!-- name and entry detail page -->
-                <section id="entry" class="neu none">
-                    <h1> Enter your name !</h1>
-                    <input class="input-name" type="text" placeholder="Your Name" required>
-                    <button class="play-btn"> PLAY</button>
-                </section>
-
-                <!--  Grid page Html -->
-                <section id="gridblock" class="neu none">
-                    <!-- data structure of matrix -->
-                    <table id="matrix" class="">
-                    </table>
-
-                    <!-- visual of table -->
-                    <table id="myTable" class="">
-                    </table>
-                </section>
-
-            </section>
-
-
-            <!-- clock section     -->
-
-            <section class="clock__box">
-                <div class="clock neu">
-                    <h1>clock</h1>
-                    <span class="time">00:00</span>
-                </div>
-            </section>
-
-            <!--flag page at right  -->
-            <section class="flag__block neu">
-                <!-- frag area work -->
-                <div class="frames">
-                    <div class="frames-bomb">
-                        <div class="img">
-                            <img src="bomb.png" alt="bomb">
-                        </div>
-                        <p>: 00</p>
-                    </div>
-
-                    <div class="frames-flag">
-                        <div class="img">
-                            <img src="flag.png" alt="bomb">
-                        </div>
-                        <p>: 00</p>
-                    </div>
-                </div>
-
-                <!-- top players area -->
-                <div class="top">
-                    <div class="top__heading"> Players</div>
-                </div>
-            </section>
-
-            <!-- name section -->
-            <div class="naming">
+        <section class="background-pic">
+             <!-- name section -->
+             <div class="naming">
                 <!-- <img src="bomb.png" alt=""> -->
             </div>
+
+            <!-- clock section     -->
+            <section class="clock__box time">
+                00:00
+            </section>
+
+            <section id="game" class="background">
+
+                <!-- Left Menu -->
+
+                <div class="select__box neu">
+
+                    <div class="logo__wrapper">
+                        <!-- logo part      -->
+                        <div class="logo__box">
+                            <div class="logo neu">M</div>
+                        </div>
+                        <div class="logo__tag-box">
+                            <h1 class="logo__tag">MINESWEEPER</h1>
+                        </div>
+
+                    </div>
+
+                    <!-- selecting area -->
+
+                    <section class="scroll">
+
+
+
+                        <h2 class="select__difficulty"> Defficulty Level</h2>
+
+                        <div class="buttons">
+                            <button id="easy" class="category"> EASY</button>
+                            <button id="medium" class="category">MEDIUM</button>
+                            <button id="hard" class="category">HARD</button>
+                        </div>
+
+                        <!-- frag area work -->
+                        <h2 class="select__difficulty"> Bomb status</h2>
+                        <div class="frames neu">
+                            <div class="frames-bomb">
+                                <div class="img">
+                                    <img src="bomb.png" alt="bomb">
+                                </div>
+                                <p class="bomb-num">: 00</p>
+                            </div>
+
+                            <div class="frames-flag">
+                                <div class="img">
+                                    <img src="flag.png" alt="bomb">
+                                </div>
+                                <p class="flag-num">: 00</p>
+                                <p class="flag-warn"></p>
+                            </div>
+                        </div>
+
+                        <!-- Player Stat -->
+
+                        <h2 class="select__difficulty">Top Rank Holder</h2>
+
+                        <section class="list__block neu">
+                            <ol class="list">
+                                <li class="list__items">
+                                    <span class="list__player">1. Shivanshu Srivastava</span>
+                                    <span class="list__time">00:20</span>
+                                </li>
+                                <li class="list__items">
+                                    <span class="list__player">2. Shivanshu Srivastava</span>
+                                    <span class="list__time">00:24</span>
+                                </li>
+                                <li class="list__items">
+                                    <span class="list__player">3. Pransul Kaushik</span>
+                                    <span class="list__time">00:50</span>
+                                </li>
+                            </ol>
+                        </section>
+                    </section>
+
+
+
+                </div>
+
+
+                <!-- key box -->
+                <section class="key__block">
+                    <!-- name and entry detail page -->
+                    <section id="entry" class="neu none">
+                        <h1> Enter your name !</h1>
+                        <input class="input-name" type="text" placeholder="Your Name" required>
+                        <button class="play-btn"> PLAY</button>
+                    </section>
+
+                    <!--  Grid page Html -->
+                    <section id="gridblock" class="neu none">
+                        <!-- data structure of matrix -->
+                        <table id="matrix" class="">
+                        </table>
+
+                        <!-- visual of table -->
+                        <table id="myTable" class="">
+                        </table>
+                    </section>
+
+                </section>
+
+
+            </section>
+
 
         </section>
 
