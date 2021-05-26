@@ -394,7 +394,7 @@ var createBoard = function(level,user_id){
    else if(level === 'hard'){ num_col =30; num_row =19;}
    
 
-    fetch('http://127.0.0.1:8000/ingame/create_board/', {
+    fetch('http://18.117.76.134:8002/ingame/create_board/', {
         method: 'post',
         body: JSON.stringify({
                 "num_row":num_row,	/* num_row -> It is the number of rows in board*/
@@ -416,7 +416,7 @@ var createBoard = function(level,user_id){
 var updateBoard = function(row,col,user_id,action,timer,level){
     
     timer = covertTime(timer);
-    fetch('http://127.0.0.1:8000/ingame/update_board/', {
+    fetch('http://18.117.76.134:8002/ingame/update_board/', {
           method: 'post',
           body: JSON.stringify({
 				"num_row":row,	// num_row -> It is the row in board the user clicked
