@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from .bring_board import createBoard
+from .bring_board import cell, createBoard
 from game.models import board_info, user_info
 
 def new_board(num_row, num_col, user_id, bot, game_type):
@@ -135,6 +135,7 @@ def update_board(choice ,action, user_id, time):
         _board_info.cell_left = cell_left
         _board_info.number_bombs = int(0.15*(num_row*num_col))
 
+        cell_left = sum([not Cell([i,j]).is_checked for i in range(num_row) for j in range(num_col)])
         if cell_left == 0:
             _board_info.status = 1
             
