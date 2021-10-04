@@ -1,0 +1,4 @@
+Use Machine Learning
+Improve the algo
+Decrease the skewness in the Plot
+Improve the win rate
